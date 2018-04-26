@@ -60,6 +60,7 @@
     <Compile Include="ObjectModel\BadgerAccount.cs" />
     <Compile Include="ObjectModel\Document.cs" />
     <Compile Include="ObjectModel\GlobalStore.cs" />
+    <Compile Include="ObjectModel\Link.cs" />
     <Compile Include="ObjectModel\OneDriveAccount.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="WebEndPoints\EndPointBase.cs" />
     <Compile Include="WebEndPoints\LiveLoginEndpoint.cs" />
     <Compile Include="WebEndPoints\RampEndpoint.cs" />
+    <Compile Include="WebEndPoints\VroomEndpoint.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OneDriveClient.ObjectModel
 {
-    class BadgerAccount
+    public class BadgerAccount
     {
     }
 }

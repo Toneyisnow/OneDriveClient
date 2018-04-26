@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -29,13 +30,20 @@ namespace OneDriveClient
             GlobalStore.GetInstance().AddAccount(account);
 
             LiveLoginEndpoint liveLogin = new LiveLoginEndpoint();
-            await liveLogin.LoginAccount(account);
+            await liveLogin.LoginRST(account);
 
             RampEndpoint ramp = new RampEndpoint();
             await ramp.SetRamp(account, "EnablePermissionPremiumAccountCheck", RampEndpoint.RampOption.OptOut);
             await ramp.SetRamp(account, "EnablePermissionPassword", RampEndpoint.RampOption.OptIn);
 
+            Thread.Sleep(10000);
 
+            await liveLogin.LoginPPSecure(account);
+
+            VroomEndpoint vroom = new VroomEndpoint();
+            Document document = await vroom.CreateFile(account, "test.txt");
+
+            Link link = await vroom.CreateLink(account, document, LinkType.Edit, "test");
 
 
         }

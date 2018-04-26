@@ -17,7 +17,7 @@ namespace OneDriveClient.WebEndPoints
 
             var values = new Dictionary<string, string>
             {
-               { "Environment", "prod" },
+               { "Environment", "SOAK3" },
                { "TenantName", "MSA" },
                { "Template", "SynchronousAccount" },
                { "AccountTimeoutSeconds", "1020" },
