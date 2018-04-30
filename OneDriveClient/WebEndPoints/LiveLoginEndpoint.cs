@@ -1,4 +1,5 @@
-﻿using OneDriveClient.ObjectModel;
+﻿using OneDriveClient.Common;
+using OneDriveClient.ObjectModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,8 +11,13 @@ using System.Web;
 
 namespace OneDriveClient.WebEndPoints
 {
-    public class LiveLoginEndpoint : EndPointBase
+    public class LiveLoginEndpoint : EndpointBase
     {
+        public LiveLoginEndpoint(EnvironmentType envType) : base(envType)
+        {
+
+        }
+
         public async Task LoginRST(OneDriveAccount account)
         {
             // Send Web Request

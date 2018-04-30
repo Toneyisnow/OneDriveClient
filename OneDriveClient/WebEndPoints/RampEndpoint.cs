@@ -7,10 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.IO;
+using OneDriveClient.Common;
 
 namespace OneDriveClient.WebEndPoints
 {
-    public class RampEndpoint : EndPointBase
+    public class RampEndpoint : EndpointBase
     {
         private readonly string SOAK3_ENDPOINT = "sudo-soak3.test.storage.live.com";
         private readonly string DEV_ENDPOINT = "sudo.dev.storage.live-int.com";
@@ -21,6 +22,11 @@ namespace OneDriveClient.WebEndPoints
             OptOut
         }
 
+
+        public RampEndpoint(EnvironmentType envType) : base(envType)
+        {
+
+        }
 
         public async Task SetRamp(OneDriveAccount account, string rampName, RampOption option)
         {

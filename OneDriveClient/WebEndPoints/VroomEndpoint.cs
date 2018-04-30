@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using OneDriveClient.Common;
 using OneDriveClient.ObjectModel;
 using System;
 using System.Collections.Generic;
@@ -9,8 +10,14 @@ using System.Threading.Tasks;
 
 namespace OneDriveClient.WebEndPoints
 {
-    public class VroomEndpoint : EndPointBase
+    public class VroomEndpoint : EndpointBase
     {
+        private static string ENDPOINT_SOAK3 = @"soak3.test.api.onedrive.com";
+
+        public VroomEndpoint(EnvironmentType envType) : base(envType)
+        {
+
+        }
 
         public async Task<Document> CreateFile(OneDriveAccount account, string fileName)
         {
@@ -71,6 +78,47 @@ namespace OneDriveClient.WebEndPoints
             }
 
             return null;
+        }
+
+        public async Task ValidatePermission(UserIdentity account, Link link, string password)
+        {
+            string requestUrl = string.Format("https://soak3.test.api.onedrive.com/v1.0/shares/{0}/root/action.validatePermission", link.ShareId);
+            string content = string.Format("{{ \"password\": \"{0}\" }}", password);
+
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, requestUrl);
+            request.Headers.Add("Application", "StorageTest");
+            request.Headers.Add("Authorization", account.GetVroomAuthentication());
+            request.Content = new StringContent(content, Encoding.UTF8, "application/json");
+
+            var response = await webClient.SendAsync(request);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.Created)
+            {
+                return;
+            }
+
+            return;
+        }
+
+        public async Task<string> GetDownloadUrl(UserIdentity account, Document document, string authKey)
+        {
+            string requestUrl = string.Format("https://{0}/v1.0/drives/{1}/items/{2}?select=id%2C%40content.downloadUrl&authkey={3}", 
+                                    ENDPOINT_SOAK3, document.DriveId, document.ResourceId, authKey);
+            
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
+            request.Headers.Add("Application", "StorageTest");
+            request.Headers.Add("Authorization", account.GetVroomAuthentication());
+
+            var response = await webClient.SendAsync(request);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return string.Empty;
+            }
+
+            return string.Empty;
+             
+
         }
     }
 

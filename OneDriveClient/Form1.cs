@@ -45,6 +45,16 @@ namespace OneDriveClient
 
             Link link = await vroom.CreateLink(account, document, LinkType.Edit, "test");
 
+            BadgerEndpoint badger = new BadgerEndpoint();
+            BadgerAccount badgerUser = await badger.CreateAccount();
+
+            await vroom.ValidatePermission(badgerUser, link, "test");
+
+            SkyAPIEndpoint skyAPI = new SkyAPIEndpoint();
+            await skyAPI.GetItems(badgerUser, document, link.Authkey);
+
+            // Get Download URL
+            await vroom.GetDownloadUrl(badgerUser, document, link.Authkey);
 
         }
     }

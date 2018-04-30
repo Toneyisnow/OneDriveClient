@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OneDriveClient.ObjectModel
 {
-    public class OneDriveAccount
+    public class OneDriveAccount : UserIdentity
     {
         public string EmailAddress;
 
@@ -19,6 +19,33 @@ namespace OneDriveClient.ObjectModel
         public string WLID;
 
         public string BearerToken;
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string GetVroomAuthentication()
+        {
+            if (string.IsNullOrEmpty(BearerToken))
+            {
+                throw new InvalidOperationException("No BearerToken found for Authentication.");
+            }
+
+            return "Bearer " + BearerToken;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string GetSkyAPICookie()
+        {
+            if (string.IsNullOrEmpty(BearerToken))
+            {
+                throw new InvalidOperationException("No BearerToken found for Authentication.");
+            }
+
+            return "BearerAuth=" + BearerToken;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using OneDriveClient.Common;
 using OneDriveClient.ObjectModel;
 using System;
 using System.Collections.Generic;
@@ -9,8 +10,13 @@ using System.Threading.Tasks;
 
 namespace OneDriveClient.WebEndPoints
 {
-    public class CampEndpoint : EndPointBase
+    public class CampEndpoint : EndpointBase
     {
+        public CampEndpoint(EnvironmentType envType) : base(envType)
+        {
+
+        }
+
         public async Task<OneDriveAccount> CheckoutAccount()
         {
             // Send Web Request
